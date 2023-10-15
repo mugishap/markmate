@@ -21,6 +21,7 @@ public class Student {
     private UUID id;
 
     private String names;
+
     private String email;
 
 }

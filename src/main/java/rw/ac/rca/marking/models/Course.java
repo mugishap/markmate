@@ -21,9 +21,16 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
+    @Column(unique = true)
     private String name;
 
     @OneToMany()
     private List<Mark> marks;
+
+    @Column(name = "pass_mark")
+    private Float passMark;
+
+    @Column(name = "course_code")
+    private String courseCode;
 
 }
