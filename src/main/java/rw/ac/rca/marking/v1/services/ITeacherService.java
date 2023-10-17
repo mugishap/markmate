@@ -10,8 +10,10 @@ public interface ITeacherService {
 
     Teacher create(Teacher teacher);
 
-    Teacher updateNationalId(String nationalId, UUID id);
+    Teacher updateNationalId(Teacher teacher);
 
     Page<Teacher> findAll(Pageable pageable);
+
+    Teacher findById(UUID id);
 
 }

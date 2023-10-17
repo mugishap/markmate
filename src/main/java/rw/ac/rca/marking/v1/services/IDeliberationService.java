@@ -10,7 +10,7 @@ public interface IDeliberationService {
 
     Deliberation create(Deliberation deliberation);
 
-    Deliberation update(UUID id, Deliberation deliberation);
+    Deliberation update(Deliberation deliberation);
 
     Page<Deliberation> findAll(Pageable pageable);
 

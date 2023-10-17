@@ -22,13 +22,8 @@ public class DeliberationServiceImpl implements IDeliberationService {
     }
 
     @Override
-    public Deliberation update(UUID id, Deliberation deliberation) {
-        Deliberation entity = this.deliberationRepository.getById(id);
-        entity.setDecision(deliberation.getDecision());
-        entity.setPosition(deliberation.getPosition());
-        entity.setTotalOutOf(deliberation.getTotalOutOf());
-        entity.setTotalScore(deliberation.getTotalScore());
-        return this.deliberationRepository.save(entity);
+    public Deliberation update(Deliberation deliberation) {
+        return this.deliberationRepository.save(deliberation);
     }
 
     @Override

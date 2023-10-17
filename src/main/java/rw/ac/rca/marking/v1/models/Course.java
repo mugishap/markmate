@@ -30,7 +30,7 @@ public class Course {
     private Double weight; //100
 
     @Enumerated(EnumType.STRING)
-    private ECourseStatus status;
+    private ECourseStatus status=ECourseStatus.ACTIVE;
 
     @Column(unique = true)
     private String code;

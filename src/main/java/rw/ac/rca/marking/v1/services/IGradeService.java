@@ -13,7 +13,7 @@ public interface IGradeService {
 
     Grade findById(UUID id);
 
-    Grade update(UUID id, Grade grade);
+    Grade update(Grade grade);
 
     String delete(UUID id);
 }

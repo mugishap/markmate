@@ -14,22 +14,19 @@ import javax.validation.constraints.Pattern;
 public class CreateUserDTO {
 
     @Email(message = "Email should be valid.")
-    private  String email;
+    private String email;
 
     @NotBlank
-    private  String names;
+    private String names;
 
     @NotBlank
-    private  String lastName;
-
-    @NotBlank
-    @Pattern(regexp = "/^\\+250\\d{9}$/", message = "Telephone starts with +250 and has 9 digits after.")
-    private  String telephone;
+    @Pattern(regexp = "[0-9]{12}")
+    private String telephone;
 
     private EGender gender;
 
     private ERole role;
 
     @ValidPassword
-    private  String password;
+    private String password;
 }

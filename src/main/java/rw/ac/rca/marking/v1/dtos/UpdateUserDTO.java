@@ -16,7 +16,7 @@ public class UpdateUserDTO {
     private String names;
 
     @NotBlank
-    @Pattern(regexp = "/^\\+250\\d{9}$/", message = "Telephone starts with +250 and has 9 digits after.")
+    @Pattern(regexp = "[0-9]{12}")
     private String telephone;
 
 

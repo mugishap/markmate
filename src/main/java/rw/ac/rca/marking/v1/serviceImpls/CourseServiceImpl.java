@@ -33,14 +33,8 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
-    public Course update(UUID id, Course course) {
-        Course entity = this.courseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Course", "id", id));
-        entity.setName(course.getName());
-        entity.setStatus(course.getStatus());
-        entity.setWeight(course.getWeight());
-        entity.setCode(course.getCode());
-        entity.setWeight(course.getWeight());
-        return this.courseRepository.save(entity);
+    public Course update(Course course) {
+        return this.courseRepository.save(course);
     }
 
     @Override

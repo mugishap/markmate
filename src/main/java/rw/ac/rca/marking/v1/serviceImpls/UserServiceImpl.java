@@ -56,21 +56,11 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public User update(UUID id, User user) {
-        User entity = this.userRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("User", "id", id.toString()));
-
+    public User update(User user) {
         Optional<User> userOptional = this.userRepository.findByEmail(user.getEmail());
-        if (userOptional.isPresent() && (userOptional.get().getId() != entity.getId()))
-            throw new BadRequestException(String.format("User with email '%s' already exists", entity.getEmail()));
-
-        entity.setEmail(user.getEmail());
-        entity.setNames(user.getNames());
-        entity.setTelephone(user.getTelephone());
-        entity.setGender(user.getGender());
-
-
-        return this.userRepository.save(entity);
+        if (userOptional.isPresent() && (userOptional.get().getId() != user.getId()))
+            throw new BadRequestException(String.format("User with email '%s' already exists", user.getEmail()));
+        return this.userRepository.save(user);
     }
 
     @Override

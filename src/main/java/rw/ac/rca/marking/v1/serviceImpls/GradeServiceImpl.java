@@ -32,12 +32,8 @@ public class GradeServiceImpl implements IGradeService {
     }
 
     @Override
-    public Grade update(UUID id, Grade grade) {
-        Grade entity = this.gradeRepository.getById(id);
-        entity.setGrade(grade.getGrade());
-        entity.setMaxScore(grade.getMaxScore());
-        entity.setMinScore(grade.getMinScore());
-        return this.gradeRepository.save(entity);
+    public Grade update(Grade grade) {
+        return this.gradeRepository.save(grade);
     }
 
     @Override

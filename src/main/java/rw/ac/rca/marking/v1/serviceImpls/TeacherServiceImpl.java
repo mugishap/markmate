@@ -22,13 +22,17 @@ public class TeacherServiceImpl implements ITeacherService {
     }
 
     @Override
-    public Teacher updateNationalId(String nationalId, UUID id) {
-        this.teacherRepository.updateTeacherNationalId(id, nationalId);
-        return this.teacherRepository.getById(id);
+    public Teacher updateNationalId(Teacher teacher) {
+        return this.teacherRepository.save(teacher);
     }
 
     @Override
     public Page<Teacher> findAll(Pageable pageable) {
         return this.teacherRepository.findAll(pageable);
+    }
+
+    @Override
+    public Teacher findById(UUID id) {
+        return this.teacherRepository.getById(id);
     }
 }

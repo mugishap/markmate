@@ -30,13 +30,13 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     private JwtAuthenticationEntryPoint unauthorizedHandler;
 
     @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter(){
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
         return new JwtAuthenticationFilter();
     }
 
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -74,8 +74,14 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                         "/**/*.svg", "/**/*.jpg", "/**/*.html",
                         "/**/*.css", "/**/*.js").permitAll()
                 .antMatchers(
-                        "/api/v1/auth/**", "/api/v1/users/**").permitAll()
-                .antMatchers( "/v2/api-docs",
+                        "/api/v1/teachers/**",
+                        "/api/v1/students/**"
+                ).permitAll()
+                .antMatchers(
+                        "/api/v1/auth/**",
+                        "/api/v1/users/**"
+                ).permitAll()
+                .antMatchers("/v2/api-docs",
                         "/configuration/ui",
                         "/swagger-resources/**",
                         "/configuration/security",

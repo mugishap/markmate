@@ -62,7 +62,7 @@ public class SwaggerApiDoc extends WebMvcConfigurationSupport {
                 .pathProvider(new RelativePathProvider(servletContext) {
                     @Override
                     public String getApplicationBasePath() {
-                        return "/";
+                        return "/RCAMarking";
                     }
                 }).select().apis(RequestHandlerSelectors.basePackage("rw.ac.rca.marking.v1.controllers"))
                 .paths(PathSelectors.any()).build().apiInfo(apiInfo()).securitySchemes(Arrays.asList(apiKey()))

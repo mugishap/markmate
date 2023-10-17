@@ -14,7 +14,7 @@ public interface ICourseService {
 
     Course findById(UUID id);
 
-    Course update(UUID id, Course course);
+    Course update(Course course);
 
     String delete(UUID id);
 

@@ -29,6 +29,11 @@ public class MarkServiceImpl implements IMarkService {
     }
 
     @Override
+    public Mark findById(UUID id) {
+        return this.markRepository.getById(id);
+    }
+
+    @Override
     public Page<Mark> findByStudent(Student student, Pageable pageable) {
         return this.markRepository.findByStudent(student, pageable);
     }
@@ -39,13 +44,8 @@ public class MarkServiceImpl implements IMarkService {
     }
 
     @Override
-    public Mark update(UUID id, Mark mark) {
-        Mark entity = this.markRepository.getById(id);
-        entity.setScore(mark.getScore());
-        entity.setPassMark(mark.getPassMark());
-        entity.setOutOf(mark.getOutOf());
-        entity.setDecision(mark.getDecision());
-        return this.markRepository.save(entity);
+    public Mark update(Mark mark) {
+        return this.markRepository.save(mark);
     }
 
     @Override

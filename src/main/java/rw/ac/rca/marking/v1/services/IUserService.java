@@ -22,7 +22,7 @@ public interface IUserService {
 
     public User create(User user);
 
-    public User update(UUID id, User user);
+    public User update(User user);
 
     public boolean delete(UUID id);
 

@@ -22,13 +22,17 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
-    public Student updateRegistrationNumber(String registrationNumber, UUID id) {
-        this.studentRepository.updateStudentRegistrationNumber(id, registrationNumber);
-        return this.studentRepository.getById(id);
+    public Student updateRegistrationNumber(Student student) {
+        return this.studentRepository.save(student);
     }
 
     @Override
     public Page<Student> findAll(Pageable pageable) {
         return this.studentRepository.findAll(pageable);
+    }
+
+    @Override
+    public Student findById(UUID id) {
+        return this.studentRepository.getById(id);
     }
 }

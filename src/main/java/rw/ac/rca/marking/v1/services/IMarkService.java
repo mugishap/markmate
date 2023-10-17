@@ -13,12 +13,13 @@ public interface IMarkService {
     Mark create(Mark mark);
 
     Page<Mark> findAll(Pageable pageable);
+    Mark findById(UUID id);
 
     Page<Mark> findByStudent(Student student, Pageable pageable);
 
     Page<Mark> findByCourse(Course course, Pageable pageable);
 
-    Mark update(UUID id, Mark mark);
+    Mark update(Mark mark);
 
     String delete(UUID id);
 
