@@ -8,21 +8,23 @@ import lombok.Getter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 @Getter
-public class SignUpDTO {
+public class CreateUserDTO {
 
-    @Email
+    @Email(message = "Email should be valid.")
     private  String email;
 
     @NotBlank
-    private  String firstName;
+    private  String names;
 
     @NotBlank
     private  String lastName;
 
     @NotBlank
-    private  String mobile;
+    @Pattern(regexp = "/^\\+250\\d{9}$/", message = "Telephone starts with +250 and has 9 digits after.")
+    private  String telephone;
 
     private EGender gender;
 

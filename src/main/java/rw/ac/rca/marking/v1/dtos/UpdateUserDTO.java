@@ -9,17 +9,15 @@ import javax.validation.constraints.Pattern;
 
 @Getter
 public class UpdateUserDTO {
-    @Email
+    @Email(message = "Email should be valid")
     private String email;
 
     @NotBlank
-    private String firstName;
+    private String names;
 
     @NotBlank
-    private String lastName;
-
-    @Pattern(regexp = "[0-9]{12}")
-    private String mobile;
+    @Pattern(regexp = "/^\\+250\\d{9}$/", message = "Telephone starts with +250 and has 9 digits after.")
+    private String telephone;
 
 
     private EGender gender;

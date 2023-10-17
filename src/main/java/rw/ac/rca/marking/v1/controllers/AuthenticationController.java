@@ -1,5 +1,17 @@
 package rw.ac.rca.marking.v1.controllers;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import rw.ac.rca.marking.v1.dtos.InitiatePasswordDTO;
 import rw.ac.rca.marking.v1.dtos.ResetPasswordDTO;
 import rw.ac.rca.marking.v1.dtos.SignInDTO;
@@ -12,21 +24,11 @@ import rw.ac.rca.marking.v1.security.JwtTokenProvider;
 import rw.ac.rca.marking.v1.services.IUserService;
 import rw.ac.rca.marking.v1.services.MailService;
 import rw.ac.rca.marking.v1.utils.Utility;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(path = "/api/v1/auth")
 public class AuthenticationController {
 
@@ -36,20 +38,9 @@ public class AuthenticationController {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final MailService mailService;
 
-    @Autowired
-    public AuthenticationController(IUserService userService, AuthenticationManager authenticationManager,
-                                    JwtTokenProvider jwtTokenProvider, MailService mailService,
-                                    BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.userService = userService;
-        this.authenticationManager = authenticationManager;
-        this.jwtTokenProvider = jwtTokenProvider;
-        this.mailService = mailService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
-
 
     @PostMapping(path = "/signin")
-    public ResponseEntity<JwtAuthenticationResponse> signin(@Valid @RequestBody SignInDTO dto) {
+    public ResponseEntity<ApiResponse> signin(@Valid @RequestBody SignInDTO dto) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword()));
@@ -64,7 +55,7 @@ public class AuthenticationController {
             e.printStackTrace();
         }
 
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+        return ResponseEntity.ok(ApiResponse.success("Log in successful", new JwtAuthenticationResponse(jwt)));
     }
 
     @PostMapping(path = "/initiate-reset-password")
@@ -75,9 +66,9 @@ public class AuthenticationController {
 
         this.userService.create(user);
 
-        mailService.sendResetPasswordMail(user.getEmail(), user.getFirstName() + " " + user.getLastName(), user.getActivationCode());
+        mailService.sendResetPasswordMail(user.getEmail(), user.getNames(), user.getActivationCode());
 
-        return ResponseEntity.ok(new ApiResponse(true, "Please check your mail and activate account"));
+        return ResponseEntity.ok(ApiResponse.success("Please check your mail and activate account"));
     }
 
 
@@ -94,6 +85,6 @@ public class AuthenticationController {
         } else {
             throw new AppException("Invalid code or account status");
         }
-        return ResponseEntity.ok(new ApiResponse(true, "Password successfully reset"));
+        return ResponseEntity.ok(ApiResponse.success("Password successfully reset"));
     }
 }

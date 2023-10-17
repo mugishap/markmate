@@ -17,19 +17,18 @@ public interface IUserRepository extends JpaRepository<User, UUID> {
 
     Optional<User> findByEmail(String email);
 
-    Optional<User> findByEmailOrMobile(String email, String mobile);
+    Optional<User> findByEmailOrTelephone(String email, String telephone);
 
     List<User> findByRoles(ERole role);
     Page<User> findByRoles(Pageable pageable, ERole role);
 
     @Query("SELECT u FROM User u" +
-            " WHERE (lower(u.firstName)  LIKE ('%' || lower(:searchKey) || '%')) " +
-            " OR (lower(u.lastName) LIKE ('%' || lower(:searchKey) || '%')) " +
+            " WHERE (lower(u.names)  LIKE ('%' || lower(:searchKey) || '%')) " +
             " OR (lower(u.email) LIKE ('%' || lower(:searchKey) || '%'))")
     List<User> searchUser(String searchKey);
+
     @Query("SELECT u FROM User u" +
-            " WHERE (lower(u.firstName)  LIKE ('%' || lower(:searchKey) || '%')) " +
-            " OR (lower(u.lastName) LIKE ('%' || lower(:searchKey) || '%')) " +
+            " WHERE (lower(u.names)  LIKE ('%' || lower(:searchKey) || '%')) " +
             " OR (lower(u.email) LIKE ('%' || lower(:searchKey) || '%'))")
     Page<User> searchUser(Pageable pageable, String searchKey);
 }

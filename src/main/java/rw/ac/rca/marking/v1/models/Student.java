@@ -7,6 +7,7 @@ import lombok.Setter;
 import rw.ac.rca.marking.v1.audits.TimestampAudit;
 import rw.ac.rca.marking.v1.enums.EGender;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -18,6 +19,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 public class Student extends User {
 
+    @Column(name = "registration_number", unique = true)
     private String registrationNumber;
 
     public Student(String email, String names, String telephone, EGender gender, String password, String registrationNumber){

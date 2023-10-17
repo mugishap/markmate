@@ -58,16 +58,15 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User update(UUID id, User user) {
         User entity = this.userRepository.findById(id).orElseThrow(
-                () ->  new ResourceNotFoundException("User", "id", id.toString()));
+                () -> new ResourceNotFoundException("User", "id", id.toString()));
 
         Optional<User> userOptional = this.userRepository.findByEmail(user.getEmail());
         if (userOptional.isPresent() && (userOptional.get().getId() != entity.getId()))
             throw new BadRequestException(String.format("User with email '%s' already exists", entity.getEmail()));
 
         entity.setEmail(user.getEmail());
-        entity.setFirstName(user.getFirstName());
-        entity.setLastName(user.getLastName());
-        entity.setMobile(user.getMobile());
+        entity.setNames(user.getNames());
+        entity.setTelephone(user.getTelephone());
         entity.setGender(user.getGender());
 
 
@@ -108,9 +107,9 @@ public class UserServiceImpl implements IUserService {
         String email;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        if(principal instanceof UserDetails){
+        if (principal instanceof UserDetails) {
             email = ((UserDetails) principal).getUsername();
-        }else{
+        } else {
             email = principal.toString();
         }
 
@@ -125,24 +124,23 @@ public class UserServiceImpl implements IUserService {
     }
 
 
-
     @Override
     public User changeStatus(UUID id, EUserStatus status) {
         User entity = this.userRepository.findById(id).orElseThrow(
-                () ->  new ResourceNotFoundException("User", "id", id.toString()));
+                () -> new ResourceNotFoundException("User", "id", id.toString()));
 
         entity.setStatus(status);
 
-        return  this.userRepository.save(entity);
+        return this.userRepository.save(entity);
     }
 
     @Override
     public User changeProfileImage(UUID id, File file) {
         User entity = this.userRepository.findById(id).orElseThrow(
-                () ->  new ResourceNotFoundException("Document", "id", id.toString()));
+                () -> new ResourceNotFoundException("Document", "id", id.toString()));
 
         entity.setProfileImage(file);
-        return  this.userRepository.save(entity);
+        return this.userRepository.save(entity);
 
     }
 }

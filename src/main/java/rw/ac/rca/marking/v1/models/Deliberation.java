@@ -25,11 +25,7 @@ public class Deliberation extends TimestampAudit {
     @ManyToOne
     private Student student;
 
-    private String academicYear;
-
     private Double totalScore;
-
-    private Double totalPassMark;
 
     @Column(name = "total_out_of")
     private Double totalOutOf;

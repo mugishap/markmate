@@ -1,4 +1,11 @@
 package rw.ac.rca.marking.v1.repositories;
 
-public class ICourseRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import rw.ac.rca.marking.v1.models.Course;
+
+import java.util.UUID;
+
+@Repository
+public interface ICourseRepository extends JpaRepository<Course, UUID> {
 }

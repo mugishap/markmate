@@ -24,7 +24,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Transactional
     public UserDetails loadUserByUsername(String s) {
-        User user = userRepository.findByEmailOrMobile(s,s).orElseThrow(()-> new UsernameNotFoundException("user not found with email or mobile of "+s));
+        User user = userRepository.findByEmailOrTelephone(s,s).orElseThrow(()-> new UsernameNotFoundException("user not found with email or telephone of "+s));
         return UserPrincipal.create(user);
     }
 }

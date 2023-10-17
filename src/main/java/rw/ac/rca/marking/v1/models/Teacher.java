@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import rw.ac.rca.marking.v1.enums.EGender;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -17,6 +18,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 public class Teacher extends User {
 
+    @Column(name = "national_id", unique = true)
     private String nationalId;
 
     public Teacher(String email, String names, String telephone, EGender gender, String password, String nationalId) {

@@ -23,10 +23,10 @@ public class Course {
     @Column(unique = true)
     private String name;
 
-    @Column(name = "pass_mark", columnDefinition = "double default 70.0", nullable = false)
+    @Column(name = "pass_mark", nullable = false)
     private Double passMark; //70
 
-    @Column(name = "weight", columnDefinition = "double default 100.0", nullable = false)
+    @Column(name = "weight", nullable = false)
     private Double weight; //100
 
     @Enumerated(EnumType.STRING)

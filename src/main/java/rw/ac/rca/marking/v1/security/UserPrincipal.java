@@ -24,14 +24,11 @@ public class UserPrincipal implements UserDetails {
 
     private String email;
 
-    private String firstName;
+    private String names;
 
-    private String lastName;
-
-    private String mobile;
+    private String telephone;
 
     private EGender gender;
-
 
     @JsonIgnore
     private String password;
@@ -48,9 +45,8 @@ public class UserPrincipal implements UserDetails {
         return new UserPrincipal(
                 user.getId(),
                 user.getEmail(),
-                user.getFirstName(),
-                user.getLastName(),
-                user.getMobile(),
+                user.getNames(),
+                user.getTelephone(),
                 user.getGender(),
                 user.getPassword(),
                 user.getStatus(),

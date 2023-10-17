@@ -1,19 +1,6 @@
 package rw.ac.rca.marking.v1.controllers;
 
-import rw.ac.rca.marking.v1.dtos.SignUpDTO;
-import rw.ac.rca.marking.v1.exceptions.BadRequestException;
-import rw.ac.rca.marking.v1.fileHandling.File;
-import rw.ac.rca.marking.v1.fileHandling.FileStorageService;
-import rw.ac.rca.marking.v1.models.Role;
-import rw.ac.rca.marking.v1.models.User;
-import rw.ac.rca.marking.v1.payload.ApiResponse;
-import rw.ac.rca.marking.v1.repositories.IRoleRepository;
-import rw.ac.rca.marking.v1.security.JwtTokenProvider;
-import rw.ac.rca.marking.v1.services.IFileService;
-import rw.ac.rca.marking.v1.services.IUserService;
-import rw.ac.rca.marking.v1.utils.Constants;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
@@ -22,45 +9,34 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import rw.ac.rca.marking.v1.fileHandling.File;
+import rw.ac.rca.marking.v1.fileHandling.FileStorageService;
+import rw.ac.rca.marking.v1.models.User;
+import rw.ac.rca.marking.v1.payload.ApiResponse;
+import rw.ac.rca.marking.v1.services.IFileService;
+import rw.ac.rca.marking.v1.services.IUserService;
+import rw.ac.rca.marking.v1.utils.Constants;
 
-import javax.validation.Valid;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(path = "/api/v1/users")
 public class UserController {
 
     private final IUserService userService;
-    private static final ModelMapper modelMapper = new ModelMapper();
-    private final IRoleRepository roleRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final JwtTokenProvider jwtTokenProvider;
     private final FileStorageService fileStorageService;
     private final IFileService fileService;
 
     @Value("${uploads.directory.user_profiles}")
     private String directory;
 
-    @Autowired
-    public UserController(IUserService userService, IRoleRepository roleRepository,
-                          BCryptPasswordEncoder bCryptPasswordEncoder, JwtTokenProvider jwtTokenProvider,
-                          FileStorageService fileStorageService, IFileService fileService) {
-        this.userService = userService;
-        this.roleRepository = roleRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.jwtTokenProvider = jwtTokenProvider;
-        this.fileService = fileService;
-        this.fileStorageService = fileStorageService;
-    }
-
     @GetMapping(path = "/current-user")
     public ResponseEntity<ApiResponse> currentlyLoggedInUser() {
-        return ResponseEntity.ok(new ApiResponse(true, userService.getLoggedInUser()));
+        return ResponseEntity.ok(ApiResponse.success("Logged in user fetched successfully", userService.getLoggedInUser()));
     }
 
     @GetMapping
@@ -91,7 +67,7 @@ public class UserController {
 
         User updated = this.userService.changeProfileImage(id, file);
 
-        return ResponseEntity.ok(new ApiResponse(true, "File saved successfully", updated));
+        return ResponseEntity.ok(ApiResponse.success("File saved successfully", updated));
 
     }
 
