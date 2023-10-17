@@ -48,6 +48,7 @@ public class StudentController {
         user.setGender(dto.getGender());
         user.setTelephone(dto.getTelephone());
         user.setPassword(encodedPassword);
+        user.setRegistrationNumber(dto.getRegistrationNumber());
         user.setRoles(Collections.singleton(role));
 
         return ResponseEntity.ok(new ApiResponse(true, "Student created successfully", studentService.create(user)));

@@ -45,6 +45,7 @@ public class TeacherController {
         user.setNames(dto.getNames());
         user.setGender(dto.getGender());
         user.setTelephone(dto.getTelephone());
+        user.setNationalId(dto.getNationalId());
         user.setPassword(encodedPassword);
         user.setRoles(Collections.singleton(role));
 
