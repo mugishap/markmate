@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import rw.ac.rca.marking.v1.audits.TimestampAudit;
-import rw.ac.rca.marking.v1.enums.EDeliberationDecision;
+import rw.ac.rca.marking.v1.enums.EMarkDecision;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -36,6 +36,6 @@ public class Mark extends TimestampAudit {
     private Double outOf; //100
 
     @Enumerated(EnumType.STRING)
-    private EDeliberationDecision decision;
+    private EMarkDecision decision;
 
 }
