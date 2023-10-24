@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
+import rw.ac.rca.marking.v1.utils.Mapper;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -30,31 +31,35 @@ public class JwtTokenProvider {
     @Value("${jwt.expiresIn}")
     private int jwtExpirationInMs;
 
-    public String generateToken(Authentication authentication){
+    public String generateToken(Authentication authentication) {
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+
         Date now = new Date();
-        Date expiryDate = new Date(now.getTime()+jwtExpirationInMs);
+        Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 
-        for (GrantedAuthority role :userPrincipal.getAuthorities()){
+        for (GrantedAuthority role : userPrincipal.getAuthorities()) {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getAuthority()));
         }
 
-        User authUser = userRepository.findById(userPrincipal.getId()).get();
+
+        User authUser = Mapper.getUserFromDTO(userPrincipal);
 
 
-        String token = Jwts .builder() .setId(authUser.getId()+"")
-                .setSubject(userPrincipal.getId()+"")
+        return Jwts.builder()
+                .setId(authUser.getId() + "")
+                .setSubject(userPrincipal.getId() + "")
+                .claim("user", authUser)
                 .claim("authorities", grantedAuthorities)
-                .claim("user",authUser)
-                .setIssuedAt(new
-                        Date(System.currentTimeMillis())) .setExpiration(expiryDate)
-                .signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
-        return  token;
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(expiryDate)
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .compact();
     }
 
 
-    public String getUserIdFromToken(String token){
+
+    public String getUserIdFromToken(String token) {
         Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
         return claims.getSubject();
     }
